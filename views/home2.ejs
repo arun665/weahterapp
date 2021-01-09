@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://fonts.googleapis.com/css?family=Sofia' rel='stylesheet'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Aclonica' rel='stylesheet'>
+    <link rel="stylesheet" href="mystyle.css">
+    <title> Weather app </title>
+<style>
+    body{
+        background-color: #cccccc;
+    }
+header {
+    font-family: 'Sofia';font-size: 1.5em;
+    width:100%;
+    text-align:center;
+    color:blue;
+    text-shadow: 2px 2px #000000;
+}
+.container {
+    width:100%;
+    text-align:center;
+    margin-top:1%;
+    align-items: center;
+}
+.container-2 {
+    width:98%;
+    margin-top:2%;
+    margin-left:1%;
+    margin-right: 1%;
+
+}
+.card{
+width:350px;
+margin-left:auto;
+    margin-right: auto;
+    box-shadow: 5px 10px #888888;
+    border-radius: 10%;
+
+    
+}
+.card-header{
+    text-align:center;
+    
+}
+.card-body{
+    text-align:center;
+}
+.card-footer{
+    text-align:center;
+}
+
+.form-group{
+    width:400px;
+    margin-left:auto;
+    margin-right: auto;
+}
+
+button{
+    margin-top:1%;
+}
+
+.wrapper{
+  width:200px;
+  height:200px;
+  border:2px solid black;
+  margin:auto auto auto auto;
+  overflow:hidden;
+
+}
+
+.frame{
+  height:100%;
+  width:100%;
+  background-position:center;
+  background-size:cover;
+ 
+}
+.frame{
+   -webkit-animation: zoomeffect 10s infinite;
+   -moz-animation: zoomeffect 10s infinite;
+   animation: zoomeffect 10s infinite;
+}
+@-webkit-keyframes zoomeffect{
+		0%{
+			background-position:center;
+		  transform:scale(1,1);
+		}
+		50%{
+			background-position:center;
+		  transform:scale(2,2);
+		}
+		100%{
+			background-position:center;
+		  transform:scale(1,1);
+		}
+}
+@keyframes zoomeffect{
+		0%{
+			background-position:center;
+		  transform:scale(1,1);
+		}
+		50%{
+			background-position:center;
+		  transform:scale(2,2);
+		}
+		100%{
+			background-position:center;
+		  transform:scale(1,1);
+		}
+}
+</style>
+
+<body>
+    <header>
+        <h1> A.S Weather App</h1>
+        </header>
+
+
+        <div class="container">
+         
+            <form class="form-inline" action="/" method="POST">
+              <div class="form-group">
+      
+                &nbsp&nbsp<input  id="myInput" class="form-control"  placeholder="Enter state" name="state">
+               &nbsp&nbsp <button type="submit" class="btn btn-primary">get weather</button>
+          
+            </div>
+          
+            </form>
+          </div>
+
+
+          <div class="container-2">
+          <div class="card">
+            <div class="card-header">
+
+                <h1 style="font-family:Aclonica;color:rebeccapurple;font-size: 30px;"> <%= state %> | <%= tempval %>&deg;C</h1>
+                <img src="<%=temp_status%>" height="150px" width="150px">
+              <p style="font-family:Aclonica;color:rebeccapurple;font-size:20px;"> <%=temp_stat%></p>
+              
+            </div>
+            <div class="card-body" style="font-family:Aclonica;color:rebeccapurple;font-size:10px;">   
+                <h2 style="font-family:Aclonica;color:rebeccapurple;font-size:20px;"> feels-like: <%=temp_feel%>&deg;C</h2>
+                <h2 style="font-family:Aclonica;color:rebeccapurple;font-size:20px;"> max-temp: <%=temp_min%> &deg;C</h2>
+                <h2 style="font-family:Aclonica;color:rebeccapurple;font-size:20px;"> min-temp: <%=temp_max%>&deg;C</h2>
+                <p  id="date" style="font-family:Aclonica;color:rebeccapurple;font-size:15px;">  </p>
+            
+            </div>
+            <div class="card-footer">
+               <p style="font-family:Aclonica;color:rebeccapurple;font-size:15px;"><%=des%></p>
+            </div>
+          </div>
+
+          </div>
+          
+   
+          
+
+          <section class="spinner-wrapper">
+            <div class="loader loader-2">
+              <svg class="loader-star" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1">
+                    <polygon points="29.8 0.3 22.8 21.8 0 21.8 18.5 35.2 11.5 56.7 29.8 43.4 48.2 56.7 41.2 35.1 59.6 21.8 36.8 21.8 " fill="#18ffff" />
+                 </svg>
+              <div class="loader-circles"></div>
+        
+        
+            </div>
+          </section>
+        
+        
+<script>
+            let spinnerWrapper = document.querySelector('.spinner-wrapper');
+        
+            window.addEventListener('load', function () {
+                // spinnerWrapper.style.display = 'none';
+                spinnerWrapper.parentElement.removeChild(spinnerWrapper);
+            });
+        </script>    
+​<script>
+    var date=document.getElementById("date");
+    var weathericon=document.getElementById("weathericon");
+
+    var currdate=new Date();
+
+    function getday() {
+  var d = new Date();
+  var weekday = new Array(7);
+  weekday[0] = "Sunday";
+  weekday[1] = "Monday";
+  weekday[2] = "Tuesday";
+  weekday[3] = "Wednesday";
+  weekday[4] = "Thursday";
+  weekday[5] = "Friday";
+  weekday[6] = "Saturday";
+
+  var n = weekday[d.getDay()];
+  console.log(n);
+  return n;
+}
+function gettime() {
+  
+  var hours = currdate.getHours();
+  var min = currdate.getMinutes();
+  var sec = currdate.getSeconds();
+  var per="AM";
+  if(hours >11){
+      per="PM";
+      if(hours>12){
+          hours-=12;
+      }
+    }
+   
+  
+  return hours+":" + min +":"+""+ per;
+
+ 
+
+
+}
+function getmonth() {
+  var month = new Array();
+  month[0] = "January";
+  month[1] = "February";
+  month[2] = "March";
+  month[3] = "April";
+  month[4] = "May";
+  month[5] = "June";
+  month[6] = "July";
+  month[7] = "August";
+  month[8] = "September";
+  month[9] = "October";
+  month[10] = "November";
+  month[11] = "December";
+
+  var d = new Date();
+  var n = month[d.getMonth()];
+  console.log(n);
+
+return n;
+}
+
+gettime();
+getmonth();
+getday();
+
+date.innerHTML=gettime()+"|"+ getmonth() +"|"+ getday();
+    
+</script>
+<script>
+    function autocomplete(inp, arr) {
+  /*the autocomplete function takes two arguments,
+  the text field element and an array of possible autocompleted values:*/
+  var currentFocus;
+  /*execute a function when someone writes in the text field:*/
+  inp.addEventListener("input", function(e) {
+      var a, b, i, val = this.value;
+      /*close any already open lists of autocompleted values*/
+      closeAllLists();
+      if (!val) { return false;}
+      currentFocus = -1;
+      /*create a DIV element that will contain the items (values):*/
+      a = document.createElement("DIV");
+      a.setAttribute("id", this.id + "autocomplete-list");
+      a.setAttribute("class", "autocomplete-items");
+      /*append the DIV element as a child of the autocomplete container:*/
+      this.parentNode.appendChild(a);
+      /*for each item in the array...*/
+      for (i = 0; i < arr.length; i++) {
+        /*check if the item starts with the same letters as the text field value:*/
+        if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+          /*create a DIV element for each matching element:*/
+          b = document.createElement("DIV");
+          /*make the matching letters bold:*/
+          b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+          b.innerHTML += arr[i].substr(val.length);
+          /*insert a input field that will hold the current array item's value:*/
+          b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+          /*execute a function when someone clicks on the item value (DIV element):*/
+          b.addEventListener("click", function(e) {
+              /*insert the value for the autocomplete text field:*/
+              inp.value = this.getElementsByTagName("input")[0].value;
+              /*close the list of autocompleted values,
+              (or any other open lists of autocompleted values:*/
+              closeAllLists();
+          });
+          a.appendChild(b);
+        }
+      }
+  });
+  /*execute a function presses a key on the keyboard:*/
+  inp.addEventListener("keydown", function(e) {
+      var x = document.getElementById(this.id + "autocomplete-list");
+      if (x) x = x.getElementsByTagName("div");
+      if (e.keyCode == 40) {
+        /*If the arrow DOWN key is pressed,
+        increase the currentFocus variable:*/
+        currentFocus++;
+        /*and and make the current item more visible:*/
+        addActive(x);
+      } else if (e.keyCode == 38) { //up
+        /*If the arrow UP key is pressed,
+        decrease the currentFocus variable:*/
+        currentFocus--;
+        /*and and make the current item more visible:*/
+        addActive(x);
+      } else if (e.keyCode == 13) {
+        /*If the ENTER key is pressed, prevent the form from being submitted,*/
+        e.preventDefault();
+        if (currentFocus > -1) {
+          /*and simulate a click on the "active" item:*/
+          if (x) x[currentFocus].click();
+        }
+      }
+  });
+  function addActive(x) {
+    /*a function to classify an item as "active":*/
+    if (!x) return false;
+    /*start by removing the "active" class on all items:*/
+    removeActive(x);
+    if (currentFocus >= x.length) currentFocus = 0;
+    if (currentFocus < 0) currentFocus = (x.length - 1);
+    /*add class "autocomplete-active":*/
+    x[currentFocus].classList.add("autocomplete-active");
+  }
+  function removeActive(x) {
+    /*a function to remove the "active" class from all autocomplete items:*/
+    for (var i = 0; i < x.length; i++) {
+      x[i].classList.remove("autocomplete-active");
+    }
+  }
+  function closeAllLists(elmnt) {
+    /*close all autocomplete lists in the document,
+    except the one passed as an argument:*/
+    var x = document.getElementsByClassName("autocomplete-items");
+    for (var i = 0; i < x.length; i++) {
+      if (elmnt != x[i] && elmnt != inp) {
+        x[i].parentNode.removeChild(x[i]);
+      }
+    }
+  }
+  /*execute a function when someone clicks in the document:*/
+  document.addEventListener("click", function (e) {
+      closeAllLists(e.target);
+  });
+}
+
+/*An array containing all the country names in the world:*/
+var countries = [ "Andhra Pradesh",
+                "Arunachal Pradesh",
+                "Assam",
+                "Bihar",
+                "Chhattisgarh",
+                "Goa",
+                "Gujarat",
+                "Haryana",
+                "Himachal Pradesh",
+                "Jammu and Kashmir",
+                "Jharkhand",
+                "Karnataka",
+                "Kerala",
+                "Madhya Pradesh",
+                "Maharashtra",
+                "Manipur",
+                "Meghalaya",
+                "Mizoram",
+                "Nagaland",
+                "Odisha",
+                "Punjab",
+                "Rajasthan",
+                "Sikkim",
+                "Tamil Nadu",
+                "Telangana",
+                "Tripura",
+                "Uttarakhand",
+                "Uttar Pradesh",
+                "West Bengal",
+                "Andaman and Nicobar Islands",
+                "Chandigarh",
+                "Dadra and Nagar Haveli",
+                "Daman and Diu",
+                "Delhi",
+                "Lakshadweep",
+                "Puducherry"];
+
+/*initiate the autocomplete function on the "myInput" element, and pass along the countries array as possible autocomplete values:*/
+autocomplete(document.getElementById("myInput"), countries);
+
+
+</script>              
+</body>
+</html>
