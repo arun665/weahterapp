@@ -111,7 +111,7 @@ app.get('/', (req, res) => {
   
   
   
-     res.render("ejs/home2.ejs",{state:state,tempval:arr[0].main.temp , temp_feel:arr[0].main.feels_like,temp_stat:arr[0].weather[0].main,temp_max:arr[0].main.temp_max,temp_min:arr[0].main.temp_min,temp_status:temp_status , des: des});
+     res.render("home2.ejs",{state:state,tempval:arr[0].main.temp , temp_feel:arr[0].main.feels_like,temp_stat:arr[0].weather[0].main,temp_max:arr[0].main.temp_max,temp_min:arr[0].main.temp_min,temp_status:temp_status , des: des});
   
     })
   
@@ -212,7 +212,7 @@ temp_status=clear;
 
 
 
-   res.render("ejs/home2.ejs",{state:state,tempval:arr[0].main.temp , temp_feel:arr[0].main.feels_like,temp_stat:arr[0].weather[0].main,temp_max:arr[0].main.temp_max,temp_min:arr[0].main.temp_min,temp_status:temp_status , des: des});
+   res.render("home2.ejs",{state:state,tempval:arr[0].main.temp , temp_feel:arr[0].main.feels_like,temp_stat:arr[0].weather[0].main,temp_max:arr[0].main.temp_max,temp_min:arr[0].main.temp_min,temp_status:temp_status , des: des});
 
   })
 
