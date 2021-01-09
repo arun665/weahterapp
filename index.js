@@ -224,7 +224,8 @@ temp_status=clear;
   })
 
 })
-app.listen(8000||process.env.PORT, () => {
+var port=8000|| process.env.PORT;
+app.listen(port, () => {
   console.log("Example app listening at http://localhost:${8000}")
 })
 
